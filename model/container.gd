@@ -1,11 +1,11 @@
 extends RefCounted
 
-var grid_size:Vector2
+var grid_size:Vector2i
 var whitelist:Array = []
 var blacklist:Array = []
 var contents:Array[Array]
 
-func _init(size:Vector2=Vector2(5,5)) -> void:
+func _init(size:Vector2i=Vector2i(5,5)) -> void:
 	grid_size=size
 	contents.resize(size.x)
 	for i in size.x:
