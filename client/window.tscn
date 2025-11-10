@@ -1,8 +1,59 @@
-[gd_scene format=3 uid="uid://b6f8o12h4mch0"]
+[gd_scene load_steps=4 format=3 uid="uid://b6f8o12h4mch0"]
 
-[node name="window" type="MarginContainer"]
+[ext_resource type="PackedScene" uid="uid://c56u2kw2wpo6a" path="res://client/container_representation.tscn" id="1_t44qc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t44qc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g2cy0"]
+bg_color = Color(0.6718764, 0.0787443, 0.16514492, 1)
+
+[node name="window" type="PanelContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -14.5
+offset_bottom = 21.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_t44qc")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="WindowBar" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 26)
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/WindowBar"]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(0.40784314, 1, 1, 1)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/WindowBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 2
+
+[node name="Button" type="Button" parent="VBoxContainer/WindowBar/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_g2cy0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_g2cy0")
+theme_override_styles/focus = SubResource("StyleBoxFlat_g2cy0")
+text = "X"
+
+[node name="ContainerRepresentation" parent="VBoxContainer" instance=ExtResource("1_t44qc")]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
