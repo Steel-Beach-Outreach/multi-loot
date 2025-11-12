@@ -16,3 +16,6 @@ func _init(size:Vector2i=Vector2i(5,5)) -> void:
 		temp.fill(null)
 		contents[i]=temp
 	
+func put_item(item:Item, coordinates:Vector2i):
+	contents[coordinates.x][coordinates.y]=item
+	changed.emit()

@@ -3,19 +3,18 @@
 [ext_resource type="Texture2D" uid="uid://d35dtc2ye0swd" path="res://client/art/items/purple gem.png" id="1_tacsy"]
 [ext_resource type="Script" uid="uid://clrbmewa14fn3" path="res://client/item_representation.gd" id="2_ughd2"]
 
-[node name="ItemRepresentation" type="TextureButton"]
+[node name="ItemRepresentation" type="TextureRect"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -16.0
-offset_top = -16.0
-offset_right = 16.0
-offset_bottom = 16.0
+offset_left = -576.0
+offset_top = -324.0
+offset_right = -544.0
+offset_bottom = -292.0
 grow_horizontal = 2
 grow_vertical = 2
-texture_normal = ExtResource("1_tacsy")
+texture = ExtResource("1_tacsy")
+stretch_mode = 2
 script = ExtResource("2_ughd2")
-
-[connection signal="pressed" from="." to="." method="_on_pressed"]

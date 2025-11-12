@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://bq6oekpvdr00"]
+
+[ext_resource type="PackedScene" uid="uid://b6f8o12h4mch0" path="res://client/window.tscn" id="1_6b4lk"]
+
+[node name="MultWindows" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="window" parent="." instance=ExtResource("1_6b4lk")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="window2" parent="." instance=ExtResource("1_6b4lk")]
+layout_mode = 1
+offset_left = -251.0
+offset_top = -118.0
+offset_right = -151.0
+offset_bottom = 8.0

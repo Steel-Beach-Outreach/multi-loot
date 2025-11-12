@@ -1,11 +1,11 @@
-class_name ItemRepresentation extends TextureButton
+class_name ItemRepresentation extends TextureRect
 
-static var dragging=null
 var item:Item
 
 
 
-
-func _on_pressed() -> void:
-	if dragging:return
-	dragging=self
+func _gui_input(event: InputEvent) -> void:
+	if event.is_action_pressed("drag item") and LootGlobal.held_item == null:
+		LootGlobal.held_item = item
+		LootGlobal.hold_offset = get_viewport().get_mouse_position() - global_position
+		LootGlobal.held_action = "drag item"

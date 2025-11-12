@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://c56u2kw2wpo6a"]
+[gd_scene load_steps=3 format=3 uid="uid://c56u2kw2wpo6a"]
 
 [ext_resource type="Script" uid="uid://cni1c3icekgmj" path="res://client/container_representation.gd" id="1_7v6vi"]
+[ext_resource type="PackedScene" uid="uid://57nw3j7gnb3x" path="res://client/item_representation.tscn" id="2_aya2g"]
 
 [node name="ContainerRepresentation" type="Control"]
 layout_mode = 3
@@ -10,3 +11,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_7v6vi")
+item_representation_scene = ExtResource("2_aya2g")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
