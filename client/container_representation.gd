@@ -26,15 +26,6 @@ func populate_representations():
 				rep.set_position.call_deferred(Vector2i(x,y)*grid_size_plus_one)
 				add_child(rep)
 	
-func _gui_input(event: InputEvent) -> void:
-	if not LootGlobal.held_item:return
-	if not event.is_action_released(LootGlobal.held_action): return
-	print(event.as_text())
-	print(event.position)
-	var grid_x :int = floor(get_local_mouse_position().x / LootConfiguration.grid_size.x)
-	var grid_y :int = floor(get_local_mouse_position().y / LootConfiguration.grid_size.y)
-	container.put_item(LootGlobal.held_item, Vector2i(grid_x, grid_y))
-
 func _process(_delta: float) -> void:
 	if mouse_in: queue_redraw()
 
@@ -54,7 +45,13 @@ func _draw() -> void:
 	if mouse_in:
 		var grid_x :int = floor(get_local_mouse_position().x / grid_size_plus_one.x)
 		var grid_y :int = floor(get_local_mouse_position().y / grid_size_plus_one.y)
-		draw_rect(Rect2(Vector2(grid_x*grid_size_plus_one.x, grid_y*grid_size_plus_one.y), Vector2(LootConfiguration.grid_size)),Color.GREEN,true)
+		var can_fit = container.can_fit_at(LootGlobal.held_item, Vector2i(grid_x, grid_y))
+		draw_rect(Rect2(Vector2(grid_x*grid_size_plus_one.x, grid_y*grid_size_plus_one.y), Vector2(LootConfiguration.grid_size)),Color.GREEN if can_fit else Color.RED, true)
+		if not LootGlobal.held_item:return
+		if not can_fit: return
+		if Input.is_action_just_released(LootGlobal.held_action):
+			LootGlobal.try_move_item_to(LootGlobal.held_item, Item.ContainerDetails.new(container, Vector2i(grid_x, grid_y)))
+
 
 var mouse_in:bool
 func _on_mouse_entered() -> void:

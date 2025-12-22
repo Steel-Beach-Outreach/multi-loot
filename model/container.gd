@@ -18,4 +18,13 @@ func _init(size:Vector2i=Vector2i(5,5)) -> void:
 	
 func put_item(item:Item, coordinates:Vector2i):
 	contents[coordinates.x][coordinates.y]=item
+	item.container_details=Item.ContainerDetails.new(self, coordinates)
+	changed.emit()
+
+func can_fit_at(_item:Item, location:Vector2i) -> bool:
+	return contents[location.x][location.y]==null
+
+func remove_item(item:Item, slot:Vector2i) -> void:
+	assert(contents[slot.x][slot.y] == item)
+	contents[slot.x][slot.y]=null
 	changed.emit()

@@ -17,8 +17,14 @@ func _process(_delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	if not held_item: return
-	if event.is_action_released(held_action):
-		pass
-		#print(event.position)
-		#return
-		#held_item=null
+	if event.is_action_pressed("escape"):
+		held_item=null
+		return
+
+
+func try_move_item_to(item:Item, destination:Item.ContainerDetails) -> void:
+	var container := destination.container
+	if not container.can_fit_at(item,destination.slot): return
+	item.container_details.container.remove_item(item, item.container_details.slot)
+	container.put_item(item,destination.slot)
+	if item == held_item: held_item=null
