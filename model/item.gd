@@ -4,11 +4,14 @@ class_name Item extends Node
 class ContainerDetails:
 	var container:ItemContainer
 	var slot:Vector2i
-	func _init(_container:ItemContainer, _slot:Vector2i):
+	var rotated:bool=false
+	func _init(_container:ItemContainer, _slot:Vector2i, _rotated:bool):
 		container=_container
 		slot=_slot
+		rotated = _rotated
 
 var container_details:ContainerDetails = null
+
 var item_id:int
 var stack_size:int = 1
 var weight:float

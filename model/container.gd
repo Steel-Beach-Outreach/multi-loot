@@ -16,9 +16,9 @@ func _init(size:Vector2i=Vector2i(5,5)) -> void:
 		temp.fill(null)
 		contents[i]=temp
 	
-func put_item(item:Item, coordinates:Vector2i):
+func put_item(item:Item, coordinates:Vector2i, rotated:bool):
 	contents[coordinates.x][coordinates.y]=item
-	item.container_details=Item.ContainerDetails.new(self, coordinates)
+	item.container_details=Item.ContainerDetails.new(self, coordinates, rotated)
 	changed.emit()
 
 func can_fit_at(_item:Item, location:Vector2i) -> bool:
