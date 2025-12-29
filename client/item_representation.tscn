@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://57nw3j7gnb3x"]
 
-[ext_resource type="Texture2D" uid="uid://d35dtc2ye0swd" path="res://client/art/items/purple gem.png" id="1_tacsy"]
+[ext_resource type="Texture2D" uid="uid://d35dtc2ye0swd" path="res://example items/items/purple gem.png" id="1_tacsy"]
 [ext_resource type="Script" uid="uid://clrbmewa14fn3" path="res://client/item_representation.gd" id="2_ughd2"]
 
 [node name="ItemRepresentation" type="TextureRect"]

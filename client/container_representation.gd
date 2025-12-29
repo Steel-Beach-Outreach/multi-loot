@@ -13,6 +13,7 @@ func _ready() -> void:
 	custom_minimum_size=grid_size_plus_one*container.grid_size
 	container.changed.connect(queue_redraw)
 	container.put_item(Item.new(), Vector2i.ZERO, false)
+	container.put_item(Item.new(1), Vector2i.ONE, false)
 
 func populate_representations():
 	for child in get_children():
@@ -43,17 +44,19 @@ func _draw() -> void:
 		grid_color)
 	
 	if mouse_in and LootGlobal.held_item:
-		var grid_x :int = floor(get_local_mouse_position().x / grid_size_plus_one.x)
-		var grid_y :int = floor(get_local_mouse_position().y / grid_size_plus_one.y)
+		var grid_x :int = floor((get_local_mouse_position().x - LootGlobal.hold_offset.x) / grid_size_plus_one.x)
+		var grid_y :int = floor((get_local_mouse_position().y - LootGlobal.hold_offset.y) / grid_size_plus_one.y)
 		if grid_x >= container.grid_size.x or grid_x < 0: return
 		if grid_y >= container.grid_size.y or grid_y < 0: return
-		var can_fit = container.can_fit_at(LootGlobal.held_item, Vector2i(grid_x, grid_y))
+		var to_place_rotated:bool = LootGlobal.held_item.container_details.rotated != LootGlobal.hold_rotate
+		var proposed_container_details:=Item.ContainerDetails.new(container, Vector2i(grid_x, grid_y), to_place_rotated)
+		var can_fit:bool = proposed_container_details.can_take_item(LootGlobal.held_item)
 		draw_rect(Rect2(Vector2(grid_x*grid_size_plus_one.x, grid_y*grid_size_plus_one.y), Vector2(LootConfiguration.grid_size)),Color.GREEN if can_fit else Color.RED, true)
 		if not LootGlobal.held_item:return
 		if not can_fit: return
 		if Input.is_action_just_released(LootGlobal.held_action):
-			var to_place_rotated:bool = LootGlobal.held_item.container_details.rotated != LootGlobal.hold_rotate
-			LootGlobal.try_move_item_to(LootGlobal.held_item, Item.ContainerDetails.new(container, Vector2i(grid_x, grid_y), to_place_rotated))
+			
+			LootGlobal.try_move_item_to(LootGlobal.held_item,proposed_container_details)
 
 
 var mouse_in:bool

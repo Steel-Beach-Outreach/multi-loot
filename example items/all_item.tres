@@ -1,15 +1,22 @@
-[gd_resource type="Resource" script_class="LootItemList" load_steps=5 format=3 uid="uid://doson7p3k6a13"]
+[gd_resource type="Resource" script_class="LootItemList" load_steps=7 format=3 uid="uid://doson7p3k6a13"]
 
 [ext_resource type="Script" uid="uid://cig6ugknvtno3" path="res://model/item_definition.gd" id="1_nxbpk"]
-[ext_resource type="Texture2D" uid="uid://d35dtc2ye0swd" path="res://client/art/items/purple gem.png" id="2_cxba6"]
+[ext_resource type="Texture2D" uid="uid://d35dtc2ye0swd" path="res://example items/items/purple gem.png" id="2_cxba6"]
 [ext_resource type="Script" uid="uid://fsbqbl5wv60t" path="res://model/item_list.gd" id="2_vfft3"]
+[ext_resource type="Texture2D" uid="uid://bixamsg0ixtnc" path="res://example items/items/banan.png" id="3_cxba6"]
 
 [sub_resource type="Resource" id="Resource_6hqj7"]
 script = ExtResource("1_nxbpk")
 sprite = ExtResource("2_cxba6")
 metadata/_custom_type_script = "uid://cig6ugknvtno3"
 
+[sub_resource type="Resource" id="Resource_q4ui8"]
+script = ExtResource("1_nxbpk")
+sprite = ExtResource("3_cxba6")
+dimensions = Vector2i(2, 1)
+metadata/_custom_type_script = "uid://cig6ugknvtno3"
+
 [resource]
 script = ExtResource("2_vfft3")
-items = Array[ExtResource("1_nxbpk")]([SubResource("Resource_6hqj7")])
+items = Array[ExtResource("1_nxbpk")]([SubResource("Resource_6hqj7"), SubResource("Resource_q4ui8")])
 metadata/_custom_type_script = "uid://fsbqbl5wv60t"

@@ -9,6 +9,8 @@ class ContainerDetails:
 		container=_container
 		slot=_slot
 		rotated = _rotated
+	func can_take_item(item:Item) -> bool:
+		return container.can_fit_at(item, slot, rotated)
 
 var container_details:ContainerDetails = null
 

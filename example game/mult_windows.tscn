@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bq6oekpvdr00"]
 
-[ext_resource type="PackedScene" uid="uid://b6f8o12h4mch0" path="res://client/window.tscn" id="1_6b4lk"]
+[ext_resource type="PackedScene" uid="uid://b6f8o12h4mch0" path="res://client/loot_window.tscn" id="1_6b4lk"]
 
 [node name="MultWindows" type="Control"]
 layout_mode = 3
