@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://57nw3j7gnb3x" path="res://client/item_representation.tscn" id="2_aya2g"]
 
 [node name="ContainerRepresentation" type="Control"]
+clip_contents = true
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

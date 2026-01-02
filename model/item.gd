@@ -9,8 +9,8 @@ class ContainerDetails:
 		container=_container
 		slot=_slot
 		rotated = _rotated
-	func can_take_item(item:Item) -> bool:
-		return container.can_fit_at(item, slot, rotated)
+	func can_take_item(item:Item) -> StringName:
+		return container.consider_placement_at(item, slot, rotated)
 
 var container_details:ContainerDetails = null
 
@@ -23,6 +23,10 @@ var definition:ItemDefinition:
 var sprite:Texture2D:
 	get:
 		return definition.sprite
+var container:ItemContainer
 
 func _init(_item_id:int=0) -> void:
 	item_id = _item_id
+	if definition is ContainerItem:
+		container = ItemContainer.new(definition.internal_grid_size)
+		container.container_item = self

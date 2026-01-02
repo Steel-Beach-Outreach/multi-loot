@@ -5,6 +5,7 @@ var whitelist:Array = []
 var blacklist:Array = []
 var contents:Array[Array]
 var filled_with:Array[Array]
+var container_item:Item = null
 
 signal changed
 
@@ -14,7 +15,7 @@ func get_item_dimensions(item:Item, rotated:bool) -> Vector2i:
 	if rotated: item_dimensions = transposed_vector2i(item_dimensions)
 	return item_dimensions
 
-func transposed_vector2i(vector:Vector2i) -> Vector2i:
+static func transposed_vector2i(vector:Vector2i) -> Vector2i:
 	vector.x ^= vector.y
 	vector.y ^= vector.x
 	vector.x ^= vector.y
@@ -42,6 +43,9 @@ func _init(size:Vector2i=Vector2i(5,5)) -> void:
 		temp2.fill(null)
 		contents[i]=temp
 		filled_with[i]=temp2
+	put_item(Item.new(), Vector2i.ZERO, false)
+	put_item(Item.new(1), Vector2i.ONE, false)
+	
 	
 func put_item(item:Item, coordinates:Vector2i, rotated:bool):
 	var item_dimensions: = get_item_dimensions(item, rotated)
@@ -62,6 +66,21 @@ func can_fit_at(item:Item, location:Vector2i, rotated:bool) -> bool:
 			var test_location = Vector2i(location.x+x, location.y+y)
 			if not single_square_valid_item_placement(item, test_location): return false
 	return true
+
+func does_item_contain_me(item:Item) -> bool:
+	assert(item.definition is ContainerItem)
+	var search:ItemContainer = self
+	while search.container_item != null:
+		if search.container_item == item: return true
+		assert(search != search.container_item.container_details.container, "item already contained in itself")
+		search = search.container_item.container_details.container
+	return false
+
+func consider_placement_at(item:Item, location:Vector2i, rotated:bool) -> StringName:
+	if not can_fit_at(item, location, rotated): return &"Doesn't fit"
+	if item.definition is ContainerItem:
+		if does_item_contain_me(item): return &"Can't be stored in itself"
+	return &""
 
 func remove_item(item:Item) -> void:
 	var item_dimensions: = get_item_dimensions(item, item.container_details.rotated)
