@@ -1,5 +1,6 @@
 class_name ItemRepresentation extends TextureRect
 
+
 func _init() -> void:
 	pivot_offset = size/2.
 
@@ -7,11 +8,13 @@ var item:Item = null:
 	set(val):
 		item = val
 		texture=item.sprite
-		update_rotation()
+		update_rotation.call_deferred()
 
 
 func update_rotation() -> void:
+	pivot_offset = size/2.
 	rotation = PI/2 if item.container_details.rotated else 0.
+
 
 var last_click:int = 0
 

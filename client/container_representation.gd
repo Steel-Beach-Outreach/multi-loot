@@ -27,7 +27,11 @@ func populate_representations():
 				var rep:ItemRepresentation = item_representation_scene.instantiate()
 				rep.item=item
 				add_child(rep)
-				rep.set_position.call_deferred(Vector2i(x,y)*grid_size_plus_one)
+				var destination:Vector2 = Vector2i(x,y)*grid_size_plus_one
+				if item.container_details.rotated:
+					var diff := item.definition.dimensions - ItemContainer.transposed_vector2i(item.definition.dimensions)
+					destination -= Vector2(diff)/2	 * Vector2(ContainerRepresentationGUI.grid_size_plus_one)
+				rep.set_position.call_deferred(destination)
 				
 	
 func _process(_delta: float) -> void:
