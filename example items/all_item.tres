@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="LootItemList" load_steps=10 format=3 uid="uid://doson7p3k6a13"]
+[gd_resource type="Resource" script_class="LootItemList" load_steps=11 format=3 uid="uid://doson7p3k6a13"]
 
 [ext_resource type="Script" uid="uid://cig6ugknvtno3" path="res://model/item_definition.gd" id="1_nxbpk"]
+[ext_resource type="StyleBox" uid="uid://cdm0ambin1yb" path="res://model/art/default_item_background.tres" id="2_611uu"]
 [ext_resource type="Texture2D" uid="uid://d35dtc2ye0swd" path="res://example items/items/purple gem.png" id="2_cxba6"]
 [ext_resource type="Script" uid="uid://fsbqbl5wv60t" path="res://model/item_list.gd" id="2_vfft3"]
 [ext_resource type="Texture2D" uid="uid://bixamsg0ixtnc" path="res://example items/items/banan.png" id="3_cxba6"]
