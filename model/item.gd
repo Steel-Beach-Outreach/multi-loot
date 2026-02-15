@@ -9,11 +9,12 @@ class ContainerDetails:
 		container=_container
 		slot=_slot
 		rotated = _rotated
-	func can_take_item(item:Item) -> StringName:
+	func can_take_item(item:Item) -> ItemContainer.PlacementDetails:
 		return container.consider_placement_at(item, slot, rotated)
 
 var container_details:ContainerDetails = null
-
+@warning_ignore("unused_signal")
+signal stack_updated
 var item_id:int
 var stack_size:int = 1
 var weight:float

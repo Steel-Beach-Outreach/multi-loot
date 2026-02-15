@@ -21,6 +21,12 @@ static func transposed_vector2i(vector:Vector2i) -> Vector2i:
 	vector.x ^= vector.y
 	return vector
 
+static func transposed_vector2(vector:Vector2) -> Vector2:
+	var temp:float = vector.x
+	vector.x = vector.y
+	vector.y = temp
+	return vector
+
 func write_to_slots(item_dimensions:Vector2i, location:Vector2i, set_to:Item, should_be:Item=null) -> void:
 	assert(contents[location.x][location.y] == should_be)
 	contents[location.x][location.y]=set_to
@@ -76,11 +82,31 @@ func does_item_contain_me(item:Item) -> bool:
 		search = search.container_item.container_details.container
 	return false
 
-func consider_placement_at(item:Item, location:Vector2i, rotated:bool) -> StringName:
-	if not can_fit_at(item, location, rotated): return &"Doesn't fit"
+
+class PlacementDetails:
+	var container_details:Item.ContainerDetails
+	func _init(_container_details:Item.ContainerDetails) -> void: container_details=_container_details
+class RejectionDetails extends PlacementDetails:
+	var reason:StringName
+	func _init(_reason:StringName) -> void: reason=_reason
+class StackDetails extends PlacementDetails:
+	var target_object: Item
+class InternalPlacementDetails extends PlacementDetails:
+	var container_item:Item
+	
+func consider_placement_at(item:Item, location:Vector2i, rotated:bool) -> PlacementDetails:
+	if not can_fit_at(item, location, rotated):
+		var current_item:Item = filled_with[location.x][location.y]
+		if current_item:
+			if current_item.definition == item.definition:
+				if current_item.stack_size < current_item.definition.stack_max:
+					var ret := StackDetails.new(Item.ContainerDetails.new(self,location,rotated))
+					ret.target_object = current_item
+					return ret
+		return RejectionDetails.new(&"Doesn't fit")
 	if item.definition is ContainerItem:
-		if does_item_contain_me(item): return &"Can't be stored in itself"
-	return &""
+		if does_item_contain_me(item): return RejectionDetails.new(&"Can't be stored in itself") 
+	return PlacementDetails.new(Item.ContainerDetails.new(self,location,rotated))
 
 func remove_item(item:Item) -> void:
 	var item_dimensions: = get_item_dimensions(item, item.container_details.rotated)

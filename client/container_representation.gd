@@ -62,12 +62,20 @@ func _draw() -> void:
 		if grid_y >= container.grid_size.y or grid_y < 0: return
 		var to_place_rotated:bool = LootGlobal.held_item.container_details.rotated != LootGlobal.hold_rotate
 		var proposed_container_details:=Item.ContainerDetails.new(container, Vector2i(grid_x, grid_y), to_place_rotated)
-		var can_fit:StringName = proposed_container_details.can_take_item(LootGlobal.held_item)
-		draw_rect(Rect2(Vector2(grid_x*grid_size_plus_one.x, grid_y*grid_size_plus_one.y), sprite_bounds),Color.GREEN if can_fit == &"" else Color.RED, true)
+		var can_fit:ItemContainer.PlacementDetails = proposed_container_details.can_take_item(LootGlobal.held_item)
+		var color:Color = Color.GREEN
+		if can_fit is ItemContainer.RejectionDetails: color = Color.RED
+		if can_fit is ItemContainer.StackDetails or can_fit is ItemContainer.InternalPlacementDetails: color = Color.YELLOW
+		draw_rect(Rect2(Vector2(grid_x*grid_size_plus_one.x, grid_y*grid_size_plus_one.y), sprite_bounds),color, true)
 		if not LootGlobal.held_item:return
-		if can_fit!=&"": return
+		if can_fit is ItemContainer.RejectionDetails: return
 		if Input.is_action_just_released(LootGlobal.held_action):
-			LootGlobal.try_move_item_to(LootGlobal.held_item,proposed_container_details)
+			if can_fit is ItemContainer.InternalPlacementDetails:
+				LootGlobal.try_move_item_to(LootGlobal.held_item,can_fit.container_details)
+			elif can_fit is ItemContainer.StackDetails:
+				LootGlobal.try_stack_item(LootGlobal.held_item,can_fit.target_object)
+			elif can_fit is ItemContainer.PlacementDetails:
+				LootGlobal.try_move_item_to(LootGlobal.held_item,proposed_container_details)
 
 
 var mouse_in:bool

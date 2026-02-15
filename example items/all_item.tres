@@ -10,6 +10,7 @@
 [sub_resource type="Resource" id="Resource_6hqj7"]
 script = ExtResource("1_nxbpk")
 sprite = ExtResource("2_cxba6")
+stack_max = 50
 metadata/_custom_type_script = "uid://cig6ugknvtno3"
 
 [sub_resource type="Resource" id="Resource_q4ui8"]

@@ -69,7 +69,22 @@ func open_container(container:ItemContainer) -> void:
 
 func try_move_item_to(item:Item, destination:Item.ContainerDetails) -> void:
 	var container := destination.container
-	if destination.can_take_item(item) != &"": return
+	if destination.can_take_item(item) is ItemContainer.RejectionDetails: return
+	#check server side validity
 	item.container_details.container.remove_item(item)
 	container.put_item(item,destination.slot, destination.rotated)
 	if item == held_item: held_item=null
+
+func try_stack_item(first_item:Item, destination_item:Item) -> void:
+	var amount_to_transfer:int = destination_item.definition.stack_max - destination_item.stack_size
+	if first_item.stack_size < amount_to_transfer: amount_to_transfer = first_item.stack_size
+	#check server side validity
+	first_item.stack_size-=amount_to_transfer
+	if first_item.stack_size <= 0:
+		first_item.container_details.container.remove_item(first_item)
+		first_item.queue_free()
+	else:
+		first_item.update_stack.emit()
+	destination_item.stack_size+=amount_to_transfer
+	destination_item.stack_updated.emit()
+	assert(destination_item.stack_size <= destination_item.definition.stack_max)
