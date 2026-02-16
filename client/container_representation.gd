@@ -66,9 +66,12 @@ func _draw() -> void:
 		var color:Color = Color.GREEN
 		if can_fit is ItemContainer.RejectionDetails: color = Color.RED
 		if can_fit is ItemContainer.StackDetails or can_fit is ItemContainer.InternalPlacementDetails: color = Color.YELLOW
-		draw_rect(Rect2(Vector2(grid_x*grid_size_plus_one.x, grid_y*grid_size_plus_one.y), sprite_bounds),color, true)
+		var highlight_rect:= Rect2(Vector2(grid_x*grid_size_plus_one.x, grid_y*grid_size_plus_one.y), sprite_bounds)
+		draw_rect(highlight_rect,color, true)
 		if not LootGlobal.held_item:return
-		if can_fit is ItemContainer.RejectionDetails: return
+		if can_fit is ItemContainer.RejectionDetails:
+			LootGlobal.current_rejection = can_fit
+			return
 		if Input.is_action_just_released(LootGlobal.held_action):
 			if can_fit is ItemContainer.InternalPlacementDetails:
 				LootGlobal.try_move_item_to(LootGlobal.held_item,can_fit.container_details)
@@ -76,6 +79,7 @@ func _draw() -> void:
 				LootGlobal.try_stack_item(LootGlobal.held_item,can_fit.target_object)
 			elif can_fit is ItemContainer.PlacementDetails:
 				LootGlobal.try_move_item_to(LootGlobal.held_item,proposed_container_details)
+		
 
 
 var mouse_in:bool

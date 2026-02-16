@@ -43,8 +43,7 @@ func _gui_input(event: InputEvent) -> void:
 func double_click() -> void:
 	if item.container:
 		LootGlobal.open_container(item.container)
-		
-const DEFAULT_FONT = preload("uid://dnevlpicxings")
+
 
 const stack_text_offset_from_bottom = 4
 
@@ -58,5 +57,5 @@ func _draw() -> void:
 	var draw_position:Vector2 = my_bottom_left-Vector2(0,stack_text_offset_from_bottom)
 	var text:String =  str(item.stack_size)
 	var width:float = my_bottom_right.x-my_bottom_left.x
-	draw_string_outline(DEFAULT_FONT, draw_position,text,HORIZONTAL_ALIGNMENT_RIGHT,width,16,6,Color.BLACK)
-	draw_string(DEFAULT_FONT, draw_position, text,HORIZONTAL_ALIGNMENT_RIGHT, width)
+	draw_string_outline(LootGlobal.DEFAULT_FONT, draw_position,text,HORIZONTAL_ALIGNMENT_RIGHT,width,16,6,Color.BLACK)
+	draw_string(LootGlobal.DEFAULT_FONT, draw_position, text,HORIZONTAL_ALIGNMENT_RIGHT, width)

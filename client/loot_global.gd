@@ -12,12 +12,26 @@ var held_window_offset:Vector2
 func _ready() -> void:
 	z_index=1000
 
+var current_rejection:ItemContainer.RejectionDetails = null
+
 func _draw() -> void:
 	if held_item:
 		if not Input.is_action_pressed(held_action):
 			lose_item.call_deferred()
 			return
 		var to_draw_rect:Rect2 = Rect2(get_viewport().get_mouse_position(),held_item.sprite.get_size())
+		if current_rejection:
+			var offset:Vector2 = held_item.sprite.get_size()/2
+			if held_item.container_details.rotated != hold_rotate:
+				offset = ItemContainer.transposed_vector2(offset)
+			offset.x=0
+			var string_width := LootGlobal.DEFAULT_FONT.get_string_size(current_rejection.reason)
+			var draw_position:Vector2 = to_draw_rect.position-offset + Vector2(-string_width.x/2, -10)
+			var text:String =  current_rejection.reason
+			var width:float = string_width.x
+			draw_string_outline(LootGlobal.DEFAULT_FONT, draw_position,text,HORIZONTAL_ALIGNMENT_RIGHT,width,16,6,Color.BLACK)
+			draw_string(LootGlobal.DEFAULT_FONT, draw_position, text,HORIZONTAL_ALIGNMENT_RIGHT, width,16,Color.RED)
+			current_rejection = null
 		if held_item.container_details.rotated != hold_rotate:
 			draw_set_transform(Vector2.ZERO,PI/2)
 			var transposer := to_draw_rect.position.x
@@ -51,6 +65,7 @@ func lose_item() -> void:
 	held_item = null
 
 const window_scene:PackedScene = preload("res://client/loot_window.tscn")
+const DEFAULT_FONT = preload("uid://dnevlpicxings")
 
 var loot_window_parent:Control = null
 var opened_containers:Dictionary[ItemContainer, LootWindow] = {}
