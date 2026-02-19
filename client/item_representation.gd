@@ -3,9 +3,6 @@ class_name ItemRepresentation extends TextureRect
 var background_panel: Panel:
 	get: return $Panel
 
-var stack_label: Label:
-	get: return $StackLabel
-
 func _init() -> void:
 	pivot_offset = size/2.
 
